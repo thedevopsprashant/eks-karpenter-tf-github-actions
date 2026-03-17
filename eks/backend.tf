@@ -7,11 +7,9 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "tf-bucket"
+    bucket         = "prashant-tfstates-bucket"
     region         = "ap-south-1"
-    key            = "eks/terraform.tfstate"
-    dynamodb_table = "Lock-Files"
-    encrypt        = true
+    key            = "eks-karpenter/terraform.tfstate"
   }
 }
 

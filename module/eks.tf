@@ -14,7 +14,7 @@ resource "aws_eks_cluster" "eks" {
 
 
   access_config {
-    authentication_mode                         = "CONFIG_MAP"
+    authentication_mode                         = "API_AND_CONFIG_MAP"
     bootstrap_cluster_creator_admin_permissions = true
   }
 
@@ -113,7 +113,7 @@ resource "aws_eks_node_group" "spot-node" {
     type      = "spot"
     lifecycle = "spot"
   }
-  disk_size = 50
+  disk_size = 30
 
   depends_on = [aws_eks_cluster.eks]
 }

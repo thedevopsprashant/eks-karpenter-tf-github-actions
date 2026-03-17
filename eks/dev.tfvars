@@ -19,7 +19,7 @@ eks-sg                = "eks-sg"
 
 # EKS
 is-eks-cluster-enabled     = true
-cluster-version            = "1.33"
+cluster-version            = "1.34"
 cluster-name               = "eks-cluster"
 endpoint-private-access    = false
 endpoint-public-access     = true
@@ -34,15 +34,15 @@ max_capacity_spot          = "5"
 addons = [
   {
     name    = "vpc-cni",
-    version = "v1.20.0-eksbuild.1"
+    version = "v1.21.1-eksbuild.1"
   },
   {
     name    = "coredns"
-    version = "v1.12.2-eksbuild.4"
+    version = "v1.12.4-eksbuild.1"
   },
   {
     name    = "kube-proxy"
-    version = "v1.33.0-eksbuild.2"
+    version = "v1.34.1-eksbuild.2"
   },
   {
     name    = "aws-ebs-csi-driver"
