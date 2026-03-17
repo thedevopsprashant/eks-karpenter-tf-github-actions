@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     bucket = "prashant-tfstates-bucket"
     region = "ap-south-1"
-    key = "karpentereks/terraform.tfstate"
+    key    = "karpentereks/terraform.tfstate"
   }
 }
 
