@@ -41,13 +41,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: 1.9.3
 
       # Optional: Enable caching to speed up init
       - name: Cache Terraform
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ~/.terraform.d/plugin-cache
