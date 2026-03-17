@@ -43,7 +43,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
         with:
-          terraform_version: 1.9.3
+          terraform_version: 1.14.3
 
       # Optional: Enable caching to speed up init
       - name: Cache Terraform
