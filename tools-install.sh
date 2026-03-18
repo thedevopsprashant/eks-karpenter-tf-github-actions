@@ -65,6 +65,8 @@ kubectl version --client
 
 
 #Install Helm
+sudo snap install helm --classic
+helm version
 
 
 
