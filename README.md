@@ -11,10 +11,13 @@ This project covers:
 - **CI/CD Automation**: Leverage GitHub Actions to automate deployments.
 
 ## 🌟 Comprehensive Guide
-For a detailed guide, please refer to my [blog post on Medium](https://medium.com/p/c046e8d44865).
+For a detailed guide, please refer to [blog post on Medium](https://medium.com/p/c046e8d44865).
 
 ## 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+
+## Practical Practice Commands
 
 aws eks update-kubeconfig --name dev-ap-medium-eks-cluster
 

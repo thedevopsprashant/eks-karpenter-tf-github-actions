@@ -45,23 +45,24 @@ resource "aws_subnet" "public-subnet" {
   ]
 }
 
-resource "aws_subnet" "private-subnet" {
-  count                   = var.pri-subnet-count
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = element(var.pri-cidr-block, count.index)
-  availability_zone       = element(var.pri-availability-zone, count.index)
-  map_public_ip_on_launch = false
+## Commented Private Subnets and NAT Gateway for now as EKS here uses public subnets and it will reduce the cost of NAT Gateway. We can always add private subnets and NAT Gateway later if needed. 
+# resource "aws_subnet" "private-subnet" {
+#   count                   = var.pri-subnet-count
+#   vpc_id                  = aws_vpc.vpc.id
+#   cidr_block              = element(var.pri-cidr-block, count.index)
+#   availability_zone       = element(var.pri-availability-zone, count.index)
+#   map_public_ip_on_launch = false
 
-  tags = {
-    Name                                          = "${var.pri-sub-name}-${count.index + 1}"
-    Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster-name}" = "owned"
-    "kubernetes.io/role/internal-elb"             = "1"
-  }
+#   tags = {
+#     Name                                          = "${var.pri-sub-name}-${count.index + 1}"
+#     Env                                           = var.env
+#     "kubernetes.io/cluster/${local.cluster-name}" = "owned"
+#     "kubernetes.io/role/internal-elb"             = "1"
+#   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
-}
+#   depends_on = [aws_vpc.vpc,
+#   ]
+# }
 
 
 resource "aws_route_table" "public-rt" {
@@ -77,8 +78,7 @@ resource "aws_route_table" "public-rt" {
     env  = var.env
   }
 
-  depends_on = [aws_vpc.vpc
-  ]
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_route_table_association" "name" {
@@ -91,57 +91,57 @@ resource "aws_route_table_association" "name" {
   ]
 }
 
-resource "aws_eip" "ngw-eip" {
-  domain = "vpc"
+# resource "aws_eip" "ngw-eip" {
+#   domain = "vpc"
 
-  tags = {
-    Name = var.eip-name
-  }
+#   tags = {
+#     Name = var.eip-name
+#   }
 
-  depends_on = [aws_vpc.vpc
-  ]
+#   depends_on = [aws_vpc.vpc
+#   ]
 
-}
+# }
 
-resource "aws_nat_gateway" "ngw" {
-  allocation_id = aws_eip.ngw-eip.id
-  subnet_id     = aws_subnet.public-subnet[0].id
+# resource "aws_nat_gateway" "ngw" {
+#   allocation_id = aws_eip.ngw-eip.id
+#   subnet_id     = aws_subnet.public-subnet[0].id
 
-  tags = {
-    Name = var.ngw-name
-  }
+#   tags = {
+#     Name = var.ngw-name
+#   }
 
-  depends_on = [aws_vpc.vpc,
-    aws_eip.ngw-eip
-  ]
-}
+#   depends_on = [aws_vpc.vpc,
+#     aws_eip.ngw-eip
+#   ]
+# }
 
-resource "aws_route_table" "private-rt" {
-  vpc_id = aws_vpc.vpc.id
+# resource "aws_route_table" "private-rt" {
+#   vpc_id = aws_vpc.vpc.id
 
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.ngw.id
-  }
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.ngw.id
+#   }
 
-  tags = {
-    Name = var.private-rt-name
-    env  = var.env
-  }
+#   tags = {
+#     Name = var.private-rt-name
+#     env  = var.env
+#   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
-}
+#   depends_on = [aws_vpc.vpc,
+#   ]
+# }
 
-resource "aws_route_table_association" "private-rt-association" {
-  count          = 3
-  route_table_id = aws_route_table.private-rt.id
-  subnet_id      = aws_subnet.private-subnet[count.index].id
+# resource "aws_route_table_association" "private-rt-association" {
+#   count          = 3
+#   route_table_id = aws_route_table.private-rt.id
+#   subnet_id      = aws_subnet.private-subnet[count.index].id
 
-  depends_on = [aws_vpc.vpc,
-    aws_subnet.private-subnet
-  ]
-}
+#   depends_on = [aws_vpc.vpc,
+#     aws_subnet.private-subnet
+#   ]
+# }
 
 resource "aws_security_group" "eks-cluster-sg" {
   name        = var.eks-sg

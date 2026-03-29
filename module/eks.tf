@@ -75,7 +75,7 @@ resource "aws_eks_node_group" "ondemand-node" {
   }
   tags_all = {
     "kubernetes.io/cluster/${var.cluster-name}" = "owned"
-    "Name" = "${var.cluster-name}-ondemand-nodes"
+    "Name"                                      = "${var.cluster-name}-ondemand-nodes"
   }
 
   depends_on = [aws_eks_cluster.eks]
@@ -107,7 +107,7 @@ resource "aws_eks_node_group" "spot-node" {
   }
   tags_all = {
     "kubernetes.io/cluster/${var.cluster-name}" = "owned"
-    "Name" = "${var.cluster-name}-ondemand-nodes"
+    "Name"                                      = "${var.cluster-name}-ondemand-nodes"
   }
   labels = {
     type      = "spot"
