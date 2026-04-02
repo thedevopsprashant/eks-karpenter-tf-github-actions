@@ -19,6 +19,8 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## Practical Practice Commands
 
+Select Branch: eks-demo, Set the Github Secrets for AWS Access key and Secret access key, trigger the Actions workflow to create the EKS Cluster. This will create the EKS cluster.
+
 aws eks update-kubeconfig --name dev-ap-medium-eks-cluster
 
 dev-ap-medium-eks-cluster-nodegroup-role-6884
